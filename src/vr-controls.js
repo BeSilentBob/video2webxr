@@ -311,8 +311,11 @@ export class VRControls {
         const hit = data.held || data.resizing ? null : this.raycaster.intersectObjects(this.targets(), true)[0];
         data.hover = hit ? { object: this.hitTarget(hit.object), hit } : null;
         const length = hit ? hit.distance : LASER_LENGTH;
+        // hide the laser pointer in 360°/180°-view when hiding the panel; keep the pointer active at all times in Flatscreen
+        const isPointerVisible = this.player.isFlat || this.panel.visible || !!data.held || !!data.resizing;
+        data.laser.visible = isPointerVisible;
         data.laser.scale.z = length;
-        data.dot.visible = !!hit;
+        data.dot.visible = isPointerVisible && !!hit;
         data.dot.position.set(0, 0, -length);
         if (data.held) this.dragHeld(data, gamepad?.axes, delta);
 
