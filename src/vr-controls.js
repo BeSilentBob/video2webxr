@@ -315,7 +315,7 @@ export class VRControls {
         const isPointerVisible = this.player.isFlat || this.panel.visible || !!data.held || !!data.resizing;
         data.laser.visible = isPointerVisible;
         data.laser.scale.z = length;
-        data.dot.visible = isPointerVisible && !!hit;
+        data.dot.visible = !!hit;
         data.dot.position.set(0, 0, -length);
         if (data.held) this.dragHeld(data, gamepad?.axes, delta);
 
